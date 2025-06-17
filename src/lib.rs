@@ -4,6 +4,18 @@ use std::{
     time::{Duration, Instant},
 };
 
+// Type alias to simplify complex types
+type EngineReceiver<M> = Arc<
+    Mutex<
+        mpsc::Receiver<
+            InfernumEngineResponse<
+                <<M as InfernumModel>::Request as RequestMetadata>::Metadata,
+                <M as InfernumModel>::Response,
+            >,
+        >,
+    >,
+>;
+
 /// Trait for implementing inference models that can be used with the InfernumEngine.
 ///
 /// Users implement this trait to define their custom model behavior, including
@@ -101,13 +113,7 @@ where
 {
     state: Arc<Mutex<InfernumEngineState>>,
     req_tx: Option<mpsc::Sender<InfernumEngineRequest<M::Request>>>,
-    rep_rx: Arc<
-        Mutex<
-            mpsc::Receiver<
-                InfernumEngineResponse<<M::Request as RequestMetadata>::Metadata, M::Response>,
-            >,
-        >,
-    >,
+    rep_rx: EngineReceiver<M>,
     inference_handle: Option<JoinHandle<Result<(), M::Error>>>,
     id_counter: Arc<Mutex<u8>>,
 }

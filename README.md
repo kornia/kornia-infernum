@@ -1,4 +1,6 @@
-# �� Kornia Infernum
+# 🔥 Kornia Infernum
+
+👺 Rust Inference engine for Visual Language Models
 
 A high-performance Rust library for running inference on AI models with built-in telemetry and production-ready features. Kornia Infernum provides a flexible, threaded inference engine that decouples model implementation from API design while delivering rich monitoring capabilities.
 
@@ -124,14 +126,49 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 Kornia Infernum includes a production-ready HTTP server using PaliGemma:
 
+### Start the Server
+
 ```bash
 cargo run --example infernum --features cuda  # With CUDA support
+# or
+cargo run --example infernum  # CPU only
 ```
 
 The server provides REST endpoints:
 
 - 📤 `POST /inference` - Submit inference requests
 - 📥 `GET /results` - Retrieve results with telemetry
+
+### Using the Client
+
+You can interact with the server using the included client:
+
+```bash
+# Submit an inference request
+cargo run --example client -- inference \
+  --image-path path/to/your/image.jpg \
+  --prompt "What do you see in this image?"
+
+# Check for results
+cargo run --example client -- results
+```
+
+Or use curl directly:
+
+```bash
+# Submit an inference request
+curl -X POST http://localhost:3000/inference \
+  -H "Content-Type: application/json" \
+  -d '{
+    "image_path": "path/to/your/image.jpg",
+    "prompt": "What do you see in this image?"
+  }'
+
+# Check for results
+curl http://localhost:3000/results
+```
+
+### Example Request/Response
 
 Example request:
 ```json
