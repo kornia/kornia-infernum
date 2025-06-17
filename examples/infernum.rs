@@ -5,11 +5,11 @@ use axum::{
     response::IntoResponse,
     routing::{get, post},
 };
+use kornia_image::{Image, ImageSize, allocator::CpuAllocator};
 use kornia_infernum::{
-    engine::{InfernumEngine, InfernumEngineRequest, InfernumEngineResult, InfernumEngineState},
-    model::{InfernumModel, InfernumModelRequest, InfernumModelResponse},
+    InfernumEngine, InfernumEngineResult, InfernumEngineState, InfernumModel, RequestMetadata,
 };
-use kornia_paligemma::{Paligemma, PaligemmaConfig, PaligemmaError};
+use kornia_vlm::paligemma::{Paligemma, PaligemmaConfig, PaligemmaError};
 use reqwest::StatusCode;
 use serde_json::json;
 use std::{path::PathBuf, sync::Arc};
@@ -53,10 +53,10 @@ async fn post_inference(
     };
 
     // schedule the inference
-    engine.schedule_inference(InfernumEngineRequest {
-        id: 0,
-        prompt: payload.prompt.clone(),
+    engine.schedule_inference(PaligemmaRequest {
         image: img,
+        prompt: payload.prompt.clone(),
+        sample_len: 50,
     });
 
     log::info!("Scheduled inference successfully");
@@ -69,13 +69,13 @@ async fn get_result(
 ) -> impl IntoResponse {
     // If we're here, there should be a result available
     match engine.try_poll_response() {
-        InfernumEngineResult::Success(response) => {
+        InfernumEngineResult::Success(engine_result) => {
             log::info!("Result received successfully");
             let inference_response = messages::InferenceResponse {
-                prompt: response.prompt,
-                start_time: response.start_time.elapsed().as_nanos(),
-                duration: response.duration,
-                response: response.response,
+                prompt: engine_result.request_metadata.prompt,
+                start_time: engine_result.start_time.elapsed().as_nanos(),
+                duration: engine_result.duration,
+                response: engine_result.response.result,
             };
 
             (
@@ -107,7 +107,9 @@ async fn get_result(
 }
 
 // Helper function
-fn read_image_from_path(path: &PathBuf) -> Result<kornia_image::Image<u8, 3>, String> {
+fn read_image_from_path(
+    path: &PathBuf,
+) -> Result<kornia_image::Image<u8, 3, CpuAllocator>, String> {
     let extension = path
         .extension()
         .and_then(|ext| ext.to_str())
@@ -123,15 +125,43 @@ fn read_image_from_path(path: &PathBuf) -> Result<kornia_image::Image<u8, 3>, St
 // custom model that uses Paligemma to run inference
 struct PaligemmaModel(Paligemma);
 
+struct PaligemmaRequest {
+    image: Image<u8, 3, CpuAllocator>,
+    prompt: String,
+    sample_len: usize,
+}
+
+struct PaligemmaMetadata {
+    prompt: String,
+    _image_size: ImageSize,
+}
+
+impl RequestMetadata for PaligemmaRequest {
+    type Metadata = PaligemmaMetadata;
+
+    fn metadata(&self) -> Self::Metadata {
+        PaligemmaMetadata {
+            prompt: self.prompt.clone(),
+            _image_size: self.image.size(),
+        }
+    }
+}
+
+struct PaligemmaResponse {
+    result: String,
+}
+
 impl InfernumModel for PaligemmaModel {
+    type Request = PaligemmaRequest;
+    type Response = PaligemmaResponse;
     type Error = PaligemmaError;
 
-    fn run(&mut self, request: InfernumModelRequest) -> Result<InfernumModelResponse, Self::Error> {
-        let response = self
-            .0
-            .inference(&request.image, &request.prompt, 50, false)?;
+    fn run(&mut self, request: Self::Request) -> Result<Self::Response, Self::Error> {
+        let result =
+            self.0
+                .inference(&request.image, &request.prompt, request.sample_len, false)?;
 
-        Ok(InfernumModelResponse { response })
+        Ok(PaligemmaResponse { result })
     }
 }
 
