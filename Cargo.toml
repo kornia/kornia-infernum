@@ -4,19 +4,19 @@ version = "0.1.0"
 edition = "2024"
 
 [features]
-cuda = ["kornia-paligemma/cuda"]
+cuda = ["kornia-vlm/cuda"]
 
 [dependencies]
 log = "0.4"
-kornia-image = "0.1.9"
 thiserror = "2.0"
 
 [dev-dependencies]
 argh = "0.1"
 axum = "0.8"
 env_logger = "0.11"
-kornia-io = "0.1.9"
-kornia-paligemma = { git = "https://github.com/kornia/kornia-paligemma.git", tag = "v0.1.0", features = [] }
+kornia-image = { git = "https://github.com/kornia/kornia-rs.git", branch = "paligemma" }
+kornia-io = { git = "https://github.com/kornia/kornia-rs.git", branch = "paligemma" }
+kornia-vlm = { git = "https://github.com/kornia/kornia-rs.git", branch = "paligemma" }
 tokio = { version = "1", features = ["full"] }
 reqwest = "0.12"
 serde_json = "1.0"

@@ -1765,9 +1765,8 @@ dependencies = [
 
 [[package]]
 name = "kornia-image"
-version = "0.1.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2562dec5e95330dc694a27bbf83de4907f6de2a7ae7aa9ee2405c5ce34f9bab"
+version = "0.1.10-rc.2"
+source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
 dependencies = [
  "kornia-tensor",
  "num-traits",
@@ -1776,9 +1775,8 @@ dependencies = [
 
 [[package]]
 name = "kornia-imgproc"
-version = "0.1.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2deea7b1c64ac2bcfabece42ae7425ff7a1e263d169e86de4189a3db543125e"
+version = "0.1.10-rc.2"
+source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
 dependencies = [
  "fast_image_resize",
  "kornia-image",
@@ -1797,7 +1795,7 @@ dependencies = [
  "env_logger",
  "kornia-image",
  "kornia-io",
- "kornia-paligemma",
+ "kornia-vlm",
  "log",
  "reqwest",
  "serde",
@@ -1808,14 +1806,14 @@ dependencies = [
 
 [[package]]
 name = "kornia-io"
-version = "0.1.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "995bb5f8ff75a46c15012dd787920df506d149e266ca177063cfc05b1160bdb2"
+version = "0.1.10-rc.2"
+source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
 dependencies = [
  "circular-buffer",
  "image",
  "jpeg-encoder",
  "kornia-image",
+ "kornia-tensor",
  "log",
  "png",
  "thiserror 2.0.12",
@@ -1824,9 +1822,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "kornia-paligemma"
-version = "0.1.0"
-source = "git+https://github.com/kornia/kornia-paligemma.git?tag=v0.1.0#eac1fe229615caa37c4687f06622be017c74af0e"
+name = "kornia-tensor"
+version = "0.1.10-rc.2"
+source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
+dependencies = [
+ "num-traits",
+ "thiserror 2.0.12",
+]
+
+[[package]]
+name = "kornia-vlm"
+version = "0.1.10-rc.2"
+source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
 dependencies = [
  "candle-core",
  "candle-examples",
@@ -1839,16 +1846,6 @@ dependencies = [
  "serde_json",
  "thiserror 2.0.12",
  "tokenizers",
-]
-
-[[package]]
-name = "kornia-tensor"
-version = "0.1.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a47745c14d7066646ba3b24f33bbad5fcc8497c001b40c55f01acf01bf0477a"
-dependencies = [
- "num-traits",
- "thiserror 2.0.12",
 ]
 
 [[package]]
