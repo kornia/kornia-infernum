@@ -1,6 +1,6 @@
 [package]
 name = "kornia-infernum"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 
 [features]
@@ -14,9 +14,9 @@ thiserror = "2.0"
 argh = "0.1"
 axum = "0.8"
 env_logger = "0.11"
-kornia-image = { git = "https://github.com/kornia/kornia-rs.git", branch = "paligemma" }
-kornia-io = { git = "https://github.com/kornia/kornia-rs.git", branch = "paligemma" }
-kornia-vlm = { git = "https://github.com/kornia/kornia-rs.git", branch = "paligemma" }
+kornia-image = { git = "https://github.com/kornia/kornia-rs.git", tag = "v0.1.10-rc.2" }
+kornia-io = { git = "https://github.com/kornia/kornia-rs.git", tag = "v0.1.10-rc.2" }
+kornia-vlm = { git = "https://github.com/kornia/kornia-rs.git", tag = "v0.1.10-rc.2" }
 tokio = { version = "1", features = ["full"] }
 reqwest = "0.12"
 serde_json = "1.0"

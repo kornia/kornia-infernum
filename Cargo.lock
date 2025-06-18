@@ -1766,7 +1766,7 @@ dependencies = [
 [[package]]
 name = "kornia-image"
 version = "0.1.10-rc.2"
-source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
+source = "git+https://github.com/kornia/kornia-rs.git?tag=v0.1.10-rc.2#4ec4a4393e2f456008fe166b0d75c73c5cbee114"
 dependencies = [
  "kornia-tensor",
  "num-traits",
@@ -1776,7 +1776,7 @@ dependencies = [
 [[package]]
 name = "kornia-imgproc"
 version = "0.1.10-rc.2"
-source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
+source = "git+https://github.com/kornia/kornia-rs.git?tag=v0.1.10-rc.2#4ec4a4393e2f456008fe166b0d75c73c5cbee114"
 dependencies = [
  "fast_image_resize",
  "kornia-image",
@@ -1788,7 +1788,7 @@ dependencies = [
 
 [[package]]
 name = "kornia-infernum"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "argh",
  "axum",
@@ -1807,7 +1807,7 @@ dependencies = [
 [[package]]
 name = "kornia-io"
 version = "0.1.10-rc.2"
-source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
+source = "git+https://github.com/kornia/kornia-rs.git?tag=v0.1.10-rc.2#4ec4a4393e2f456008fe166b0d75c73c5cbee114"
 dependencies = [
  "circular-buffer",
  "image",
@@ -1824,7 +1824,7 @@ dependencies = [
 [[package]]
 name = "kornia-tensor"
 version = "0.1.10-rc.2"
-source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
+source = "git+https://github.com/kornia/kornia-rs.git?tag=v0.1.10-rc.2#4ec4a4393e2f456008fe166b0d75c73c5cbee114"
 dependencies = [
  "num-traits",
  "thiserror 2.0.12",
@@ -1833,7 +1833,7 @@ dependencies = [
 [[package]]
 name = "kornia-vlm"
 version = "0.1.10-rc.2"
-source = "git+https://github.com/kornia/kornia-rs.git?branch=paligemma#c6316c4076d28daf9948bca6c42db30db3a96aa3"
+source = "git+https://github.com/kornia/kornia-rs.git?tag=v0.1.10-rc.2#4ec4a4393e2f456008fe166b0d75c73c5cbee114"
 dependencies = [
  "candle-core",
  "candle-examples",
